@@ -328,4 +328,4 @@ Above all classes creation of client application, we can run the spring boot app
 
 The client application will automatically redirect the login page of autherization server. here we need to enter the username and password of the client application which is configured in the autherization server. Once autherization successed, the autherization server provide the the autherization code and redirect to the client application. The client application validate the autherization code wihth autherization server, if the code valide, the autherization server will provide the token to client application. Once shared the token, the client application will redirect the ```securedPage.html``` page.
 
-[Reference from](https://developer.okta.com/blog/2019/03/12/oauth2-spring-security-guide)
+[Reference from developer.okta.com](https://developer.okta.com/blog/2019/03/12/oauth2-spring-security-guide)
