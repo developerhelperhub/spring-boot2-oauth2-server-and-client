@@ -262,4 +262,70 @@ public class WebController {
 
 ```
 
+This is the controller that maps incoming requests to your Thymeleaf template files.
 
+Create another Java class named ```SecurityConfiguration```:
+
+```java
+package com.developerhelperhub.ms.client.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+   
+	@Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.antMatcher("/**").authorizeRequests()
+            .antMatchers("/", "/login**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .oauth2Login();
+    }
+}
+
+```
+
+This class defines the Spring Security configuration for your application: allowing all requests on the home path and requiring authentication for all other routes. it also sets up the Spring Boot OAuth login flow.
+
+The templates go in the ```src/main/resources/templates``` directory. You’ll notice in the controller above that they’re simply returning strings for the routes. When the Thymeleaf dependencies are included the build, Spring Boot automatically assumes you’re returning the name of the template file from the controllers, and so the app will look in ```src/main/resources/templates``` for a file name with the returned string plus ```.html```.
+
+Create the home template: ```src/main/resources/templates/index.html```:
+
+```html
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Home</title>  
+</head>  
+<body>  
+    <h1>Spring Security SSO</h1>  
+    <a href="securedPage">Login</a>  
+</body>  
+</html>
+```
+
+And the secured template: ```src/main/resources/templates/securedPage.html```:
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Secured Page</title>
+</head>
+<body>
+	<h1>Secured Page</h1>
+	<span th:text="${authenticationName}"></span>
+</body>
+</html>
+```
+
+Above all classes creation of client application, we can run the spring boot application, this application run on 8082. We can use this url ```http://localhost:8082/``` to check, whether it is working or not. Once loaded the index page, you can click on the login link.
+
+The client application will automatically redirect the login page of autherization server. here we need to enter the username and password of the client application which is configured in the autherization server. Once autherization successed, the autherization server provide the the autherization code and redirect to the client application. The client application validate the autherization code wihth autherization server, if the code valide, the autherization server will provide the token to client application. Once shared the token, the client application will redirect the ```securedPage.html``` page.
+
+[Reference from](https://developer.okta.com/blog/2019/03/12/oauth2-spring-security-guide)
