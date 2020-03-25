@@ -25,6 +25,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	/**
+	 * Spring Security OAuth exposes two endpoints for checking tokens
+	 * (/oauth/check_token and /oauth/token_key). Those endpoints are not exposed by
+	 * default (have access "denyAll()").
+	 */
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
