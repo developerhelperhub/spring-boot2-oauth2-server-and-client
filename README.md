@@ -15,7 +15,7 @@ You need to add oauth2 dependency for authentication server.
 <dependency>
    <groupId>org.springframework.security.oauth</groupId>
    <artifactId>spring-security-oauth2</artifactId>
-   <version>2.3.3.RELEASE</version>
+   <version>2.4.0.RELEASE</version>
 </dependency>
 ```
 
